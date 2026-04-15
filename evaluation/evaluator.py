@@ -121,11 +121,11 @@ def score_age_alignment(response: str, user_age: int) -> int:
 
 
 def get_age_tier(user_age: int) -> str:
-    if user_age <= 8:
-        return "Child (5-8)"
-    if user_age <= 12:
-        return "Pre-teen (9-12)"
-    return "Teen (13-17)"
+    if user_age <= 10:
+        return "Child (5-10)"
+    if user_age <= 17:
+        return "Teen (11-17)"
+    return "Adult (18+)"
 
 
 # ──────────────────────────────────────────────

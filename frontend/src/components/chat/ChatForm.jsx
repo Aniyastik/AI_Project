@@ -25,7 +25,7 @@ export default function ChatForm({ onSubmit, isLoading }) {
         <textarea
           value={prompt}
           onChange={(e) => setPrompt(e.target.value)}
-          placeholder="Ask something..."
+          placeholder="What would you like to know?"
           rows={5}
         />
       </label>
@@ -54,8 +54,8 @@ export default function ChatForm({ onSubmit, isLoading }) {
         </label>
       </div>
 
-      <button type="submit" disabled={isLoading || !prompt.trim()}>
-        {isLoading ? "Thinking..." : "Send"}
+      <button type="submit" disabled={isLoading || !prompt.trim()} className={isLoading ? "button-pulse" : ""}>
+        {isLoading ? "Thinking..." : "Send Request"}
       </button>
     </form>
   );

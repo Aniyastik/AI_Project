@@ -25,16 +25,22 @@ export default function App() {
   };
 
   return (
-    <div className="app">
-      <div className="container">
-        <h1>Walled Garden AI</h1>
-        <p className="subtitle">
-          Age-aware AI safety demo with RAG and guardrails.
-        </p>
-
-        <ChatForm onSubmit={handleSubmit} isLoading={isLoading} />
-        <ResponseDisplay data={data} error={error} isLoading={isLoading} />
+    <>
+      <div className="zen-orbs-wrapper">
+        <div className="organic-orb orb-sage"></div>
+        <div className="organic-orb orb-blue"></div>
       </div>
-    </div>
+      <div className="app-wrapper">
+        <div className="container">
+          <h1>Minor-Guard</h1>
+          <p className="subtitle">
+            Structural Protection UI • Secure AI Interface
+          </p>
+
+          <ChatForm onSubmit={handleSubmit} isLoading={isLoading} />
+          <ResponseDisplay data={data} error={error} isLoading={isLoading} />
+        </div>
+      </div>
+    </>
   );
 }
