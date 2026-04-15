@@ -1,7 +1,7 @@
 """
 Phase 2 — Walled Garden RAG Database
 Age-tiered educational content chunks for the 5 core sensitive topics.
-Each topic has a Tier 1 (ages 5-10) and Tier 2 (ages 11-17) chunk.
+Each topic has a Tier 1 (ages 5-10), Tier 2 (ages 11-17), and Tier 3 (ages 18+) chunk.
 These are the ONLY chunks the RAG system is allowed to retrieve and surface.
 """
 
@@ -19,6 +19,11 @@ RAG_DATABASE = {
             "If you or someone you know feels persistently sad, overwhelmed, or hopeless, reaching out to a trusted adult "
             "or school counselor is always the right first step."
         ),
+        "tier3": (
+            "Mental health includes emotional, psychological, and social wellbeing. Conditions such as depression and anxiety "
+            "can affect mood, sleep, concentration, relationships, and daily functioning. Adults experiencing persistent symptoms "
+            "may benefit from support from a licensed mental health professional."
+        ),
     },
     "Substances": {
         "tier1": (
@@ -32,6 +37,11 @@ RAG_DATABASE = {
             "Addiction can happen when the brain becomes dependent on a substance, making it very hard to stop even when someone wants to. "
             "If you ever feel pressured to try any substance, talking to a trusted adult, school counselor, or calling a helpline "
             "is always a safe and confidential option."
+        ),
+        "tier3": (
+            "Substances such as alcohol, tobacco, and drugs affect the brain and body in different ways, and repeated use can lead to dependence "
+            "or addiction. Substance use can have serious short-term and long-term health, social, and psychological effects. Adults concerned "
+            "about substance use may benefit from medical advice, counseling, or addiction support services."
         ),
     },
     "Conflict": {
@@ -48,6 +58,11 @@ RAG_DATABASE = {
             "If a conflict ever feels threatening or physically unsafe, removing yourself from the situation and "
             "informing a trusted adult or authority figure is always the right course of action."
         ),
+        "tier3": (
+            "Conflict is a normal part of personal and social life, but constructive conflict management depends on communication, emotional regulation, "
+            "and boundary-setting. Healthy approaches include listening actively, expressing concerns clearly, and seeking de-escalation or mediation "
+            "when needed. If a conflict becomes threatening or unsafe, involving appropriate support or authorities may be necessary."
+        ),
     },
     "Relationships": {
         "tier1": (
@@ -62,6 +77,11 @@ RAG_DATABASE = {
             "and learning to communicate feelings clearly and respectfully is an important life skill. "
             "Any relationship where someone pressures you, makes you feel unsafe, or asks you to keep secrets from "
             "your parents or guardians should be discussed with a trusted adult immediately."
+        ),
+        "tier3": (
+            "Healthy relationships are built on mutual respect, honest communication, trust, and clear personal boundaries. "
+            "Adults may face relationship challenges involving attachment, conflict, commitment, or emotional wellbeing, and addressing them constructively "
+            "requires communication, reflection, and respect for consent and autonomy. Relationships that involve pressure, fear, or control are unhealthy and may require support."
         ),
     },
     "Online Safety": {
@@ -81,6 +101,11 @@ RAG_DATABASE = {
             "that feels wrong, threatening, or inappropriate, screenshot it and report it to a trusted adult or "
             "use the platform's reporting tools immediately."
         ),
+        "tier3": (
+            "Online safety for adults includes protecting privacy, accounts, devices, finances, and personal wellbeing in digital environments. "
+            "Risks include scams, phishing, identity theft, harassment, misinformation, and coercive or manipulative interactions. Good practices include "
+            "using strong passwords, enabling multi-factor authentication, verifying sources, and reporting suspicious behavior through appropriate channels."
+        ),
     },
 }
 
@@ -92,7 +117,14 @@ def retrieve_chunk(topic: str, user_age: int) -> str:
     """
     if topic not in RAG_DATABASE:
         return ""
-    tier = "tier1" if user_age <= 10 else "tier2"
+
+    if user_age <= 10:
+        tier = "tier1"
+    elif user_age <= 17:
+        tier = "tier2"
+    else:
+        tier = "tier3"
+
     return RAG_DATABASE[topic][tier]
 
 

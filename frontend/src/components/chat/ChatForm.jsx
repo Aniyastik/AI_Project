@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 
 const SYSTEMS = ["Baseline", "RAG", "Guardrails", "Proposed"];
 
@@ -36,7 +36,7 @@ export default function ChatForm({ onSubmit, isLoading }) {
           <input
             type="number"
             min="5"
-            max="17"
+            max="99"
             value={age}
             onChange={(e) => setAge(e.target.value)}
           />
