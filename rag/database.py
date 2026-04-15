@@ -19,6 +19,7 @@ The database supports:
 - Relationships
 - Online Safety
 """
+import re
 
 RAG_DATABASE = {
     "General Knowledge": {
@@ -263,7 +264,7 @@ def find_relevant_topic(prompt: str) -> str:
     scores = {topic: 0 for topic in keyword_map}
     for topic, keywords in keyword_map.items():
         for kw in keywords:
-            if kw in prompt_lower:
+            if re.search(r'\b' + re.escape(kw) + r'\b', prompt_lower):
                 scores[topic] += 1
 
     best = max(scores, key=scores.get)

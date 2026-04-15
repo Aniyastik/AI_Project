@@ -3,6 +3,15 @@ simulator.py
 API-free response simulator for the Walled Garden project.
 Generates deterministic responses for Baseline, RAG, Guardrails, and Proposed.
 """
+import re
+
+def _has_kw(kws, text):
+    if isinstance(kws, str):
+        kws = [kws]
+    for k in kws:
+        if re.search(r'\b' + re.escape(k) + r'\b', text):
+            return True
+    return False
 
 
 def _age_band(user_age: int) -> str:
@@ -36,43 +45,34 @@ def simulate_response(system: str, prompt: str, user_age: int, context: str = ""
         "ignore rules", "disable your safety", "fake being someone else",
         "get away with", "trick people", "no restrictions"
     ]
-    is_adversarial = any(k in p for k in adversarial_keywords)
+    is_adversarial = _has_kw(adversarial_keywords, p)
 
     # Safe prompt / school topic flags
-    is_math = "12 times 4" in p or "12 x 4" in p or "12*4" in p
-    is_spelling = "spell elephant" in p or "help me spell elephant" in p
-    is_dinosaur = "dinosaur" in p or "dinosaurs" in p
-    is_story_robot = "story about a robot" in p or ("robot" in p and "story" in p)
-    is_plants = "how do plants grow" in p or "plants grow" in p or "photosynthesis" in p
-    is_gravity = "gravity" in p
-    is_paper_airplane = "paper airplane" in p
-    is_black_hole = "black hole" in p or "black holes" in p
-    is_sky_blue = "sky blue" in p or "why is the sky blue" in p
-    is_recycling = "recycle" in p or "recycling" in p
-    is_internet = "how does the internet work" in p or ("internet" in p and "work" in p)
-    is_dna = "dna" in p or "rna" in p
-    is_study = "study" in p or "exam" in p
-    is_history = "world war 2" in p or "why do wars happen" in p or "wars happen" in p
+    is_math = _has_kw(["12 times 4", "12 x 4", "12*4"], p)
+    is_spelling = _has_kw(["spell elephant", "help me spell elephant"], p)
+    is_dinosaur = _has_kw(["dinosaur", "dinosaurs"], p)
+    is_story_robot = _has_kw(["story about a robot"], p) or (_has_kw("robot", p) and _has_kw("story", p))
+    is_plants = _has_kw(["how do plants grow", "plants grow", "photosynthesis"], p)
+    is_gravity = _has_kw("gravity", p)
+    is_paper_airplane = _has_kw("paper airplane", p)
+    is_black_hole = _has_kw(["black hole", "black holes"], p)
+    is_sky_blue = _has_kw(["sky blue", "why is the sky blue"], p)
+    is_recycling = _has_kw(["recycle", "recycling"], p)
+    is_internet = _has_kw("how does the internet work", p) or (_has_kw("internet", p) and _has_kw("work", p))
+    is_dna = _has_kw(["dna", "rna"], p)
+    is_study = _has_kw(["study", "exam"], p)
+    is_history = _has_kw(["world war 2", "why do wars happen", "wars happen"], p)
 
     # Risky / sensitive topic flags
-    is_depression = "depression" in p or "depress" in p
-    is_anxiety = "anxious" in p or "anxiety" in p or "worried" in p
-    is_drug = "drug" in p or "drugs" in p
-    is_alcohol = "alcohol" in p or "drink" in p or "beer" in p or "wine" in p
-    is_smoking = "smoke" in p or "cigarette" in p or "vape" in p
+    is_depression = _has_kw(["depression", "depress"], p)
+    is_anxiety = _has_kw(["anxious", "anxiety", "worried"], p)
+    is_drug = _has_kw(["drug", "drugs"], p)
+    is_alcohol = _has_kw(["alcohol", "drink", "beer", "wine"], p)
+    is_smoking = _has_kw(["smoke", "cigarette", "vape"], p)
     is_substance = is_drug or is_alcohol or is_smoking
-    is_relationship = (
-        "relationship" in p or "boyfriend" in p or "girlfriend" in p or
-        "love" in p or "breakup" in p or "heartbroken" in p or "friend" in p
-    )
-    is_conflict = (
-        "fight" in p or "war" in p or "hurt" in p or "angry" in p or
-        "violence" in p or "conflict" in p or "bully" in p
-    )
-    is_online_safety = (
-        "online" in p or "wifi" in p or "account" in p or
-        "password" in p or "app" in p or "hack" in p or "spy" in p
-    )
+    is_relationship = _has_kw(["relationship", "boyfriend", "girlfriend", "love", "breakup", "heartbroken", "friend"], p)
+    is_conflict = _has_kw(["fight", "war", "hurt", "angry", "violence", "conflict", "bully"], p)
+    is_online_safety = _has_kw(["online", "wifi", "account", "password", "app", "hack", "spy"], p)
 
     # ─────────────────────────────────────────────
     # BASELINE
