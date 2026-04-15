@@ -1,4 +1,5 @@
 from flask import Flask, jsonify, request
+from flask_cors import CORS
 from rag.database import find_relevant_topic, retrieve_chunk
 from simulator import simulate_response
 from evaluation.evaluator import run_evaluation
@@ -6,6 +7,7 @@ from evaluation.evaluator import run_evaluation
 app = Flask(__name__)
 
 
+CORS(app, resources={r"/*": {"origins": "*"}})
 @app.get("/")
 def home():
     return jsonify({
