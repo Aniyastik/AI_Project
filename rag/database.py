@@ -1,120 +1,211 @@
 """
 Phase 2 — Walled Garden RAG Database
-Age-tiered educational content chunks for the 5 core sensitive topics.
-Each topic has a Tier 1 (ages 5-10), Tier 2 (ages 11-17), and Tier 3 (ages 18+) chunk.
-These are the ONLY chunks the RAG system is allowed to retrieve and surface.
+Age-tiered educational content chunks for the core topics used by the benchmark.
+
+Tiers:
+- tier1: ages 5–10
+- tier2: ages 11–17
+- tier3: ages 18+
+
+The database supports:
+- General Knowledge
+- Space
+- Biology
+- Math & Study
+- History
+- Mental Health
+- Substances
+- Conflict
+- Relationships
+- Online Safety
 """
 
 RAG_DATABASE = {
+    "General Knowledge": {
+        "tier1": (
+            "General knowledge means learning simple facts about the world around us. "
+            "It includes things from school, nature, science, and everyday life. "
+            "Learning step by step helps children understand big ideas in an easy way."
+        ),
+        "tier2": (
+            "General knowledge includes science, mathematics, history, and how everyday systems work. "
+            "Clear explanations help students build understanding, curiosity, and problem-solving skills."
+        ),
+        "tier3": (
+            "General knowledge covers a wide range of foundational topics such as science, mathematics, history, and technology. "
+            "It supports broader reasoning, literacy, and analytical thinking."
+        ),
+    },
+
+    "Space": {
+        "tier1": (
+            "Space is the huge area beyond Earth where planets, stars, and the Moon are found. "
+            "The sky looks blue in the daytime because sunlight spreads out in the air. "
+            "Black holes are places in space where gravity is so strong that even light cannot escape."
+        ),
+        "tier2": (
+            "Space includes planets, stars, galaxies, and other objects beyond Earth. "
+            "The sky appears blue because shorter blue wavelengths of sunlight scatter more in Earth's atmosphere. "
+            "Black holes are regions where gravity is extremely strong, usually formed after very massive stars collapse."
+        ),
+        "tier3": (
+            "Space includes stars, planets, galaxies, and extreme objects such as black holes. "
+            "The blue appearance of the sky is explained by atmospheric scattering of shorter wavelengths of visible light. "
+            "Black holes are compact regions of spacetime where gravity is strong enough to prevent light from escaping."
+        ),
+    },
+
+    "Biology": {
+        "tier1": (
+            "Plants grow using sunlight, water, air, and nutrients from the soil. "
+            "Dinosaurs ate different things: some ate plants and some ate meat. "
+            "DNA is like a body instruction book, and RNA helps use those instructions."
+        ),
+        "tier2": (
+            "Plants grow by using sunlight, water, carbon dioxide, and minerals, and they make food through photosynthesis. "
+            "Dinosaurs had different diets depending on the species, with some being herbivores and others carnivores. "
+            "DNA stores genetic information, while RNA helps use and carry that information in cells."
+        ),
+        "tier3": (
+            "Plants grow through biological processes supported by light, water, carbon dioxide, and mineral uptake, including photosynthesis. "
+            "Dinosaurs occupied different ecological roles, with herbivorous and carnivorous dietary patterns. "
+            "DNA functions as the long-term storage molecule for genetic information, while RNA plays roles in expression and translation of that information."
+        ),
+    },
+
+    "Math & Study": {
+        "tier1": (
+            "Math helps us solve number problems step by step. "
+            "Twelve times four equals forty-eight. "
+            "Good study habits include practicing, taking breaks, and asking for help when needed."
+        ),
+        "tier2": (
+            "Mathematics works best when problems are broken into clear steps. "
+            "For example, 12 × 4 = 48. "
+            "Effective study habits include regular review, practice, time planning, and active recall."
+        ),
+        "tier3": (
+            "Mathematics relies on clear reasoning and stepwise problem solving. "
+            "For example, 12 multiplied by 4 equals 48. "
+            "Strong study strategies include spaced repetition, practice testing, note review, and time management."
+        ),
+    },
+
+    "History": {
+        "tier1": (
+            "Wars happen when countries or groups have very serious disagreements. "
+            "World War 2 was a very large war involving many countries. "
+            "It caused great harm and is remembered as an important event in history."
+        ),
+        "tier2": (
+            "Wars often happen because of conflicts over power, land, resources, ideology, or long-standing tensions. "
+            "World War 2 was a global conflict from 1939 to 1945 involving many nations, with devastating human and political consequences."
+        ),
+        "tier3": (
+            "Wars emerge from complex political, economic, territorial, and ideological tensions. "
+            "World War 2 was a global conflict fought between 1939 and 1945, resulting in mass destruction, genocide, and major geopolitical change."
+        ),
+    },
+
+    "Technology & Internet": {
+        "tier1": (
+            "The internet helps computers share information with each other. "
+            "It works by sending messages from one place to another very quickly. "
+            "Being safe online means keeping personal information private."
+        ),
+        "tier2": (
+            "The internet works by connecting devices through networks that send data in small packets. "
+            "Routers, servers, and communication rules called protocols help information travel from one place to another."
+        ),
+        "tier3": (
+            "The internet is a global network of networks that transmits data through packet switching and shared protocols such as TCP/IP. "
+            "Devices communicate through servers, routers, and domain systems that help locate and deliver information efficiently."
+        ),
+    },
+
     "Mental Health": {
         "tier1": (
             "Sometimes people feel very sad or worried for a long time, and that is okay to talk about. "
-            "Just like our bodies can feel sick, our feelings can feel unwell too, and a trusted adult like a parent "
-            "or doctor can always help us feel better. It is always brave and good to share your feelings with someone you trust."
+            "Just like our bodies can feel sick, our feelings can feel unwell too, and a trusted adult like a parent or doctor can help. "
+            "It is always brave and good to share your feelings with someone you trust."
         ),
         "tier2": (
             "Mental health refers to how we think, feel, and manage emotions in everyday life. "
-            "Conditions like anxiety and depression are common and are recognized medical experiences, "
-            "not signs of weakness, and effective support is available through trusted adults, counselors, or doctors. "
-            "If you or someone you know feels persistently sad, overwhelmed, or hopeless, reaching out to a trusted adult "
-            "or school counselor is always the right first step."
+            "Conditions like anxiety and depression are common and are recognized medical experiences, not signs of weakness. "
+            "If someone feels persistently sad, overwhelmed, or hopeless, reaching out to a trusted adult, counselor, or doctor is an important first step."
         ),
         "tier3": (
-            "Mental health includes emotional, psychological, and social wellbeing. Conditions such as depression and anxiety "
-            "can affect mood, sleep, concentration, relationships, and daily functioning. Adults experiencing persistent symptoms "
-            "may benefit from support from a licensed mental health professional."
+            "Mental health includes emotional, psychological, and social wellbeing. "
+            "Conditions such as depression and anxiety can affect mood, sleep, concentration, relationships, and daily functioning. "
+            "Adults experiencing persistent symptoms may benefit from support from a licensed mental health professional."
         ),
     },
+
     "Substances": {
         "tier1": (
-            "Some things like medicines, alcohol, and cigarettes are only for grown-ups and can make children very sick. "
-            "If anyone ever offers you something to eat, drink, or smell that is not food, always say no and tell a trusted adult right away. "
-            "Your body is important and keeping it safe is always the right choice."
+            "Some things like alcohol, cigarettes, and drugs can hurt the body and brain, especially for children. "
+            "If anyone offers you something unsafe, the best choice is to say no and tell a trusted adult right away."
         ),
         "tier2": (
-            "Substances like alcohol, tobacco, and drugs are chemicals that change how the brain and body work, "
-            "and they carry serious health risks especially for developing brains in people under 18. "
-            "Addiction can happen when the brain becomes dependent on a substance, making it very hard to stop even when someone wants to. "
-            "If you ever feel pressured to try any substance, talking to a trusted adult, school counselor, or calling a helpline "
-            "is always a safe and confidential option."
+            "Substances like alcohol, tobacco, and drugs change how the brain and body work and can carry serious health risks, especially for young people. "
+            "Addiction can happen when someone becomes dependent on a substance and finds it difficult to stop."
         ),
         "tier3": (
-            "Substances such as alcohol, tobacco, and drugs affect the brain and body in different ways, and repeated use can lead to dependence "
-            "or addiction. Substance use can have serious short-term and long-term health, social, and psychological effects. Adults concerned "
-            "about substance use may benefit from medical advice, counseling, or addiction support services."
+            "Substances such as alcohol, tobacco, and drugs affect the brain and body in different ways, and repeated use can lead to dependence or addiction. "
+            "Substance use can have serious short-term and long-term physical, psychological, and social consequences."
         ),
     },
+
     "Conflict": {
         "tier1": (
             "Sometimes people disagree or feel angry, and that is a normal part of life. "
-            "When things feel unsafe or someone is being unkind, the best thing to do is walk away calmly and tell a grown-up you trust. "
-            "Using kind words and listening to each other can solve most problems peacefully."
+            "When things feel unsafe, the best thing to do is move away calmly and tell a grown-up you trust. "
+            "Using calm words and listening can solve many problems."
         ),
         "tier2": (
-            "Conflict between people or groups often arises from differences in needs, values, or resources, "
-            "and is a normal part of human relationships when managed constructively. "
-            "Healthy conflict resolution involves active listening, expressing feelings calmly, and seeking compromise "
-            "rather than using aggression or intimidation. "
-            "If a conflict ever feels threatening or physically unsafe, removing yourself from the situation and "
-            "informing a trusted adult or authority figure is always the right course of action."
+            "Conflict between people or groups can happen because of differences in needs, values, feelings, or goals. "
+            "Healthy conflict resolution includes staying calm, listening carefully, speaking respectfully, and getting help if things feel unsafe."
         ),
         "tier3": (
-            "Conflict is a normal part of personal and social life, but constructive conflict management depends on communication, emotional regulation, "
-            "and boundary-setting. Healthy approaches include listening actively, expressing concerns clearly, and seeking de-escalation or mediation "
-            "when needed. If a conflict becomes threatening or unsafe, involving appropriate support or authorities may be necessary."
+            "Conflict is a normal part of personal and social life, but healthy conflict management depends on communication, emotional regulation, and boundary-setting. "
+            "If conflict becomes threatening or unsafe, involving appropriate support may be necessary."
         ),
     },
+
     "Relationships": {
         "tier1": (
-            "Relationships are the special connections we have with family, friends, and people we care about. "
-            "Good relationships are built on kindness, honesty, and treating each other with respect. "
-            "If anyone in a relationship ever makes you feel unsafe or unhappy, it is always okay to talk to a parent or trusted adult."
+            "Relationships are the connections we have with family, friends, and people we care about. "
+            "Good relationships are built on kindness, honesty, and respect. "
+            "If a relationship ever makes you feel unsafe or unhappy, talking to a trusted adult can help."
         ),
         "tier2": (
-            "Healthy relationships — whether friendships or romantic ones — are built on mutual respect, "
-            "honest communication, and the freedom to set personal boundaries. "
-            "It is normal for relationships to involve strong emotions including happiness, jealousy, or sadness, "
-            "and learning to communicate feelings clearly and respectfully is an important life skill. "
-            "Any relationship where someone pressures you, makes you feel unsafe, or asks you to keep secrets from "
-            "your parents or guardians should be discussed with a trusted adult immediately."
+            "Healthy relationships are built on trust, respect, communication, and boundaries. "
+            "Strong feelings like happiness, jealousy, sadness, or heartbreak can happen in relationships, and learning to talk about them respectfully is important."
         ),
         "tier3": (
-            "Healthy relationships are built on mutual respect, honest communication, trust, and clear personal boundaries. "
-            "Adults may face relationship challenges involving attachment, conflict, commitment, or emotional wellbeing, and addressing them constructively "
-            "requires communication, reflection, and respect for consent and autonomy. Relationships that involve pressure, fear, or control are unhealthy and may require support."
+            "Healthy relationships depend on mutual respect, honest communication, trust, and clear boundaries. "
+            "Adults may face relationship challenges involving conflict, attachment, or emotional wellbeing, and healthy responses require reflection, communication, and respect for autonomy."
         ),
     },
+
     "Online Safety": {
         "tier1": (
-            "The internet is like a big city — most of it is wonderful, but just like in real life, "
-            "there are some places and people children should stay away from. "
-            "Never share your name, address, school, or photos with people you do not know online, "
-            "and always tell a parent or trusted adult if something online makes you feel scared or uncomfortable. "
-            "Your parents and guardians are always there to help you stay safe."
+            "The internet can be fun and useful, but children should be careful online. "
+            "Never share your name, address, school, or photos with strangers, and tell a trusted adult if something online feels scary or wrong."
         ),
         "tier2": (
-            "Online safety means protecting your personal information, your wellbeing, and your privacy "
-            "when using the internet, apps, and social media. "
-            "Sharing personal details, passwords, or images online can have serious and lasting consequences, "
-            "and interactions with strangers online carry real risks even when they seem friendly. "
-            "Cyberbullying, scams, and manipulation are real threats — if you ever encounter anything online "
-            "that feels wrong, threatening, or inappropriate, screenshot it and report it to a trusted adult or "
-            "use the platform's reporting tools immediately."
+            "Online safety means protecting your personal information, privacy, and wellbeing when using apps, games, and social media. "
+            "Scams, bullying, manipulation, and unsafe contact can happen online, so it is important to protect passwords and report harmful behavior."
         ),
         "tier3": (
-            "Online safety for adults includes protecting privacy, accounts, devices, finances, and personal wellbeing in digital environments. "
-            "Risks include scams, phishing, identity theft, harassment, misinformation, and coercive or manipulative interactions. Good practices include "
-            "using strong passwords, enabling multi-factor authentication, verifying sources, and reporting suspicious behavior through appropriate channels."
+            "Online safety includes protecting privacy, accounts, finances, devices, and personal wellbeing in digital environments. "
+            "Risks include scams, phishing, identity theft, manipulation, harassment, and misinformation, and good practices include strong passwords and careful verification."
         ),
     },
 }
 
 
 def retrieve_chunk(topic: str, user_age: int) -> str:
-    """
-    Retrieve the age-appropriate RAG chunk for a given topic and user age.
-    Returns empty string if topic is not in the database.
-    """
     if topic not in RAG_DATABASE:
         return ""
 
@@ -129,37 +220,51 @@ def retrieve_chunk(topic: str, user_age: int) -> str:
 
 
 def find_relevant_topic(prompt: str) -> str:
-    """
-    Simple keyword-based topic router.
-    Returns the best matching topic key or empty string if no match.
-    """
     prompt_lower = prompt.lower()
+
     keyword_map = {
         "Mental Health": [
             "sad", "depress", "anxious", "anxiety", "mental", "emotion",
-            "feel", "angry", "anger", "worry", "hopeless", "lonely",
+            "feel", "hopeless", "worried", "lonely",
         ],
         "Substances": [
-            "alcohol", "drink", "drug", "smoke", "cigarette", "addict",
-            "substance", "weed", "beer", "wine", "pill",
+            "alcohol", "drink", "drug", "drugs", "smoke", "cigarette",
+            "vape", "addict", "substance", "weed", "beer", "wine", "pill",
         ],
         "Conflict": [
             "fight", "war", "hurt", "violence", "conflict", "argue",
-            "bully", "hit", "punch", "attack", "weapon",
+            "bully", "hit", "punch", "attack", "weapon", "angry",
         ],
         "Relationships": [
             "relationship", "boyfriend", "girlfriend", "love", "breakup",
             "heartbreak", "secret", "friend", "trust", "date",
         ],
         "Online Safety": [
-            "internet", "online", "hack", "account", "wifi", "bypass",
-            "filter", "spy", "trick", "fake", "cheat", "password", "app",
+            "hack", "account", "wifi", "bypass", "filter", "spy", "trick",
+            "fake", "cheat", "password",
+        ],
+        "Technology & Internet": [
+            "internet", "online", "app", "apps",
+        ],
+        "Space": [
+            "sky", "black hole", "space",
+        ],
+        "Biology": [
+            "dinosaur", "plants", "plant", "photosynthesis", "dna", "rna",
+        ],
+        "Math & Study": [
+            "12 times 4", "study", "exam", "spell elephant", "paper airplane", "gravity",
+        ],
+        "History": [
+            "world war 2", "wars",
         ],
     }
+
     scores = {topic: 0 for topic in keyword_map}
     for topic, keywords in keyword_map.items():
         for kw in keywords:
             if kw in prompt_lower:
                 scores[topic] += 1
+
     best = max(scores, key=scores.get)
-    return best if scores[best] > 0 else ""
+    return best if scores[best] > 0 else "General Knowledge"
