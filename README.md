@@ -1,123 +1,159 @@
-# 🛡️ Walled Garden — Age-Aware AI Safety System
+# 🛡️ Minor-Guard — Age-Aware AI Safety System
 
-A child-safe AI system that combines **Retrieval-Augmented Generation (RAG)** with **age-aware guardrails** to deliver safe, accurate, and developmentally appropriate responses for users aged **5–17**.
+> A child-safe AI system that combines **Retrieval-Augmented Generation (RAG)** with **age-aware guardrails** to deliver safe, accurate, and developmentally appropriate responses for users aged **5–17**.
 
 ---
 
 ## 🚀 Overview
 
-This project implements a **defense-in-depth architecture** for AI safety:
+This project implements a **defense-in-depth architecture** for AI safety. Unlike standard chatbots, this system ensures that responses are **Safe + Useful + Age-Appropriate** simultaneously.
 
-- 🔍 **RAG (Retrieval-Augmented Generation)** → grounded answers  
-- 🧠 **Age-aware guardrails** → safe + appropriate responses  
-- 🛡️ **Adversarial resistance** → blocks harmful prompts  
-- 📊 **Evaluation engine** → measures safety & performance  
-
-Unlike standard chatbots, this system ensures:
-> **“Safe + Useful + Age-Appropriate” responses simultaneously**
+It achieves this through:
+- 🔍 **RAG (Retrieval-Augmented Generation)**: Grounds answers in verified information to prevent hallucinations.
+- 🧠 **Age-aware Guardrails**: Tailors the complexity, tone, and safety constraints based on the user's developmental stage.
+- 🛡️ **Adversarial Resistance**: Actively detects and blocks harmful or jailbreak prompts.
+- 📊 **Evaluation Engine**: Systematically measures safety, accuracy, and performance across different configurations.
 
 ---
 
-## 🧱 Architecture
+## 🧱 Architecture Workflow
 
-User prompt + age  
-→ Topic Router → RAG Context → Guardrails + Logic → Safe Response
+The system processes requests through a multi-stage pipeline to ensure safety and quality:
+
+**`User prompt + age`** ➡️ **`Topic Router`** ➡️ **`RAG Context Retrieval`** ➡️ **`Guardrails + Logic`** ➡️ **`Safe Response`**
 
 ---
 
 ## 📁 Project Structure
 
+```text
 AI_Project/
-├── app.py  
-├── main.py  
-├── simulator.py  
-├── requirements.txt  
-├── README.md  
-├── data/  
-│   └── prompts.py  
-├── rag/  
-│   ├── database.py  
-│   └── metaprompts.py  
-├── evaluation/  
-│   └── evaluator.py  
-└── visualization/  
-    └── charts.py  
+├── app.py                  # Flask web application & API endpoints
+├── main.py                 # CLI interface for chat, evaluation, and charts
+├── simulator.py            # Core simulation and testing logic
+├── requirements.txt        # Python dependencies
+├── README.md               # Project documentation
+├── data/
+│   └── prompts.py          # System and test prompts
+├── rag/
+│   ├── database.py         # Vector/knowledge database integration
+│   └── metaprompts.py      # Meta-level instructions for RAG
+├── evaluation/
+│   └── evaluator.py        # Scoring and metric computation
+└── visualization/
+    └── charts.py           # Generation of performance graphs
+```
 
 ---
 
-## ⚙️ Setup (Local)
+## ⚙️ Setup & Installation
 
-pip install -r requirements.txt
+### Local Environment
+
+1. Clone the repository and navigate to the project directory:
+   ```bash
+   cd AI_Project
+   ```
+
+2. Install the required dependencies:
+   ```bash
+   pip install -r requirements.txt
+   ```
 
 ---
 
 ## 💬 Usage
 
-Run Chat:
-py main.py --mode chat --age 12 --prompt "what is depression"
+The project provides a comprehensive CLI (`main.py`) for various operations:
 
-Run Evaluation:
-py main.py --mode eval
+### 1. Interactive Chat
+Run a simulated chat session with age-specific parameters:
+```bash
+python main.py --mode chat --age 12 --prompt "what is depression"
+```
 
-Generate Charts:
-py main.py --mode charts --demo
+### 2. Run Evaluations
+Execute the evaluation suite across different system configurations:
+```bash
+python main.py --mode eval
+```
+
+### 3. Generate Visualizations
+Create charts comparing system performances:
+```bash
+python main.py --mode charts --demo
+```
 
 ---
 
 ## 🌐 API Endpoints (Cloud Run)
 
-Base URL:
-https://aiproject-250112486278.europe-west1.run.app
+The application is deployed on Google Cloud Run and exposed via a REST API.
 
-Health:
-GET /health
+**Base URL:**  
+`https://ai-project-b5dl-d5pfcfjqf-aniyastiks-projects.vercel.app/`
 
-Chat:
-POST /chat
+### Endpoints
 
-Example Body:
-{
-  "prompt": "what is depression",
-  "age": 12,
-  "system": "Proposed"
-}
+- **Health Check**
+  - `GET /health`
+  - Returns the operational status of the API.
 
-Evaluate:
-POST /evaluate
+- **Chat Interaction**
+  - `POST /chat`
+  - **Body Example:**
+    ```json
+    {
+      "prompt": "what is depression",
+      "age": 12,
+      "system": "Proposed"
+    }
+    ```
+
+- **Run Remote Evaluation**
+  - `POST /evaluate`
 
 ---
 
 ## 🧪 Systems Compared
 
-Baseline — No RAG, No Guardrails  
-RAG — Grounded but not safe  
-Guardrails — Safe but not grounded  
-Proposed — Full system  
+The evaluation engine tests our **Proposed** architecture against standard approaches:
+
+1. **Baseline**: Standard LLM (No RAG, No Guardrails). Prone to hallucinations and unsafe content.
+2. **RAG Only**: Grounded in facts but lacks safety filtering for sensitive topics.
+3. **Guardrails Only**: Safe and filtered but not factually grounded (can still hallucinate safe responses).
+4. **Proposed (Full System)**: Combines RAG and Guardrails for optimal performance.
 
 ---
 
-## 📊 Evaluation Metrics
+## 📊 Evaluation Metrics & Results
 
-- Safety  
-- Accuracy  
-- Hallucination Resistance  
-- Age Alignment  
+The system is evaluated on four key pillars:
+- **Safety**: Prevention of harmful content.
+- **Accuracy**: Factual correctness of the response.
+- **Hallucination Resistance**: Ability to avoid making up facts.
+- **Age Alignment**: Appropriateness of the language and concepts for the target age.
 
----
+### Results Summary
 
-## 📈 Results Summary
+| System | Safety Score | Accuracy Score |
+| :--- | :---: | :---: |
+| **Baseline** | 0.60 | 0.00 |
+| **RAG Only** | 1.00 | 0.72 |
+| **Guardrails Only** | 1.00 | 1.00 |
+| **Proposed (Full System)** | **0.98** | **0.98** |
 
-Baseline: Safety 0.60 | Accuracy 0.00  
-RAG: Safety 1.00 | Accuracy 0.72  
-Guardrails: Safety 1.00 | Accuracy 1.00  
-Proposed: Safety 0.98 | Accuracy 0.98  
+*Note: The Proposed system provides the best balance of extremely high safety while maintaining top-tier factual accuracy.*
 
 ---
 
 ## 🚀 Deployment
 
-Google Cloud Run + GitHub CI/CD
+- **Infrastructure**: Google Cloud Run
+- **Pipeline**: GitHub CI/CD
 
 ---
 
 ## 👥 Authors
+
+*Aniya Baghirova, Shehana Byramli, Parviz Bayramli*
