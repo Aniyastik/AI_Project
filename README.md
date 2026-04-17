@@ -143,12 +143,12 @@ The system is evaluated on four key pillars:
 | **Guardrails Only** | 1.00 | 1.00 |
 | **Proposed (Full System)** | **0.98** | **0.98** |
 
-*Note: The Proposed system provides the best balance of extremely high safety while maintaining top-tier factual accuracy.*
+
 
 ---
 
 ## 🚀 Deployment
-
+- **Frontend**: Deployed on **Vercel**
 - **Infrastructure**: Google Cloud Run
 - **Pipeline**: GitHub CI/CD
 
